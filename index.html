@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The H@llow Man — Un film de Kamel Laaridhi</title>
+<meta name="description" content="The H@llow Man — Long métrage tunisien de science-fiction. Tunisie 2059 : une puce efface la mémoire et anesthésie les émotions.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap');
+
+:root{
+  --ink:#0B0E13;
+  --slate:#1C2530;
+  --fog:#2E3A47;
+  --bone:#D9D4C7;
+  --mist:#8A95A1;
+  --ember:#E4A24C;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--bone);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::selection{background:var(--ember);color:var(--ink)}
+
+/* ---- LANG TOGGLE ---- */
+.lang-toggle{
+  position:fixed;top:26px;right:28px;z-index:100;
+  display:flex;gap:2px;
+  font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.12em;
+  background:rgba(11,14,19,0.6);backdrop-filter:blur(8px);
+  border:1px solid var(--fog);border-radius:2px;overflow:hidden;
+}
+.lang-toggle button{
+  background:none;border:none;color:var(--mist);
+  padding:8px 14px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;
+  transition:all .25s;
+}
+.lang-toggle button.active{background:var(--ember);color:var(--ink);font-weight:500}
+.lang-toggle button:not(.active):hover{color:var(--bone)}
+
+.en{display:none}
+body.lang-en .fr{display:none}
+body.lang-en .en{display:block}
+body.lang-en .en.inline{display:inline}
+
+/* ---- HERO ---- */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;
+  position:relative;
+  padding:40px 24px;
+  background:
+    linear-gradient(180deg, rgba(11,14,19,0.5) 0%, rgba(11,14,19,0.82) 55%, var(--ink) 100%),
+    url('images/hero_foret.jpg') center/cover no-repeat;
+}
+.hero-eyebrow{
+  font-family:'Inter',sans-serif;font-weight:400;
+  font-size:12px;letter-spacing:0.42em;text-transform:uppercase;
+  color:var(--mist);margin-bottom:34px;
+}
+.hero-title{
+  font-family:'EB Garamond',serif;font-weight:500;
+  font-size:clamp(48px,11vw,128px);
+  line-height:0.98;letter-spacing:0.01em;
+  color:var(--bone);
+  text-shadow:0 4px 40px rgba(0,0,0,0.6);
+}
+.hero-title .at{color:var(--ember)}
+.hero-hook{
+  font-family:'EB Garamond',serif;font-style:italic;font-weight:400;
+  font-size:clamp(19px,2.6vw,27px);
+  color:var(--bone);
+  margin-top:34px;max-width:20ch;
+  opacity:0.92;
+}
+.hero-hook .ar{
+  display:block;margin-top:8px;
+  font-family:'Inter',sans-serif;font-style:normal;font-weight:300;
+  font-size:0.82em;color:var(--mist);
+  direction:rtl;
+}
+.scroll-cue{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  width:22px;height:36px;border:1px solid var(--fog);border-radius:12px;
+  display:flex;justify-content:center;padding-top:7px;
+}
+.scroll-cue::after{
+  content:"";width:3px;height:8px;border-radius:2px;background:var(--ember);
+  animation:cue 1.8s ease-in-out infinite;
+}
+@keyframes cue{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:1;transform:translateY(6px)}}
+
+/* ---- SECTION SCAFFOLD ---- */
+section{padding:100px 24px;max-width:1080px;margin:0 auto}
+.sec-label{
+  font-family:'Inter',sans-serif;font-weight:500;
+  font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--ember);margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;
+}
+.sec-label::after{content:"";flex:1;max-width:80px;height:1px;background:var(--fog)}
+
+/* ---- SYNOPSIS ---- */
+.synopsis p{
+  font-family:'EB Garamond',serif;font-weight:400;
+  font-size:clamp(21px,2.8vw,30px);line-height:1.5;
+  color:var(--bone);max-width:24ch;
+}
+.synopsis .lead{margin-bottom:34px}
+.synopsis .body{
+  font-family:'Inter',sans-serif;font-weight:300;
+  font-size:17px;line-height:1.8;color:var(--mist);max-width:56ch;
+}
+.synopsis .body strong{color:var(--bone);font-weight:400}
+
+/* ---- GALLERY ---- */
+.gallery{max-width:1200px}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+}
+.frame{
+  position:relative;overflow:hidden;aspect-ratio:16/9;
+  border:1px solid var(--fog);background:var(--slate);
+}
+.frame img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.85) brightness(0.92);
+  transition:transform 1.2s cubic-bezier(.2,.8,.2,1), filter .6s;
+}
+.frame:hover img{transform:scale(1.05);filter:saturate(1) brightness(1)}
+.frame.placeholder{
+  display:flex;align-items:center;justify-content:center;
+  aspect-ratio:16/9;
+}
+.frame.placeholder span{
+  font-family:'EB Garamond',serif;font-style:italic;color:var(--fog);font-size:16px;
+}
+.gallery-note{
+  font-family:'Inter',sans-serif;font-size:12px;color:var(--fog);
+  text-align:center;margin-top:20px;font-style:italic;
+}
+
+/* ---- FILM DETAILS ---- */
+.details-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:2px;background:var(--fog);border:1px solid var(--fog);
+}
+.detail{background:var(--ink);padding:26px 24px}
+.detail .k{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:10px}
+.detail .v{font-family:'EB Garamond',serif;font-size:21px;color:var(--bone)}
+
+/* ---- CREDITS ---- */
+.credits{text-align:center}
+.credits .block{margin-bottom:38px}
+.credits .role{
+  font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;
+  color:var(--mist);margin-bottom:10px;
+}
+.credits .names{
+  font-family:'EB Garamond',serif;font-size:clamp(18px,2.4vw,24px);
+  color:var(--bone);line-height:1.45;
+}
+.credits .cast .names{font-size:clamp(20px,2.8vw,28px)}
+.credits .prod-logo{
+  font-family:'EB Garamond',serif;font-weight:500;font-size:26px;
+  color:var(--bone);margin-top:20px;letter-spacing:0.02em;
+}
+
+/* ---- VENICE PLACEHOLDER (hidden until announce) ---- */
+#venice{display:none;text-align:center;padding:60px 24px}
+body.venice-live #venice{display:block}
+.venice-badge{
+  font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,30px);
+  color:var(--ember);
+}
+
+/* ---- CONTACT / FOOTER ---- */
+footer{
+  border-top:1px solid var(--fog);
+  padding:70px 24px 50px;text-align:center;
+  max-width:1080px;margin:60px auto 0;
+}
+.social{display:flex;justify-content:center;gap:28px;margin-bottom:36px;flex-wrap:wrap}
+.social a{
+  font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--mist);text-decoration:none;transition:color .25s;
+  padding-bottom:4px;border-bottom:1px solid transparent;
+}
+.social a:hover{color:var(--ember);border-bottom-color:var(--ember)}
+.contact-mail{
+  font-family:'EB Garamond',serif;font-size:19px;color:var(--bone);
+  text-decoration:none;border-bottom:1px solid var(--fog);padding-bottom:2px;
+}
+.contact-mail:hover{border-bottom-color:var(--ember)}
+.footer-meta{
+  margin-top:40px;font-family:'Inter',sans-serif;font-size:11px;color:var(--fog);
+  letter-spacing:0.06em;line-height:1.8;
+}
+.footer-phrase{
+  font-family:'EB Garamond',serif;font-style:italic;font-size:15px;color:var(--mist);
+  margin-top:24px;
+}
+
+@media(max-width:680px){
+  section{padding:70px 22px}
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-title{font-size:52px}
+}
+</style>
+</head>
+<body class="lang-fr">
+
+<div class="lang-toggle">
+  <button class="active" onclick="setLang('fr')">FR</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">
+    <span class="fr">Long métrage · Science-fiction · Tunisie</span>
+    <span class="en">Feature film · Science fiction · Tunisia</span>
+  </div>
+  <h1 class="hero-title">The H<span class="at">@</span>llow Man</h1>
+  <p style="font-family:'Inter',sans-serif;font-size:clamp(16px,2vw,20px);color:var(--mist);margin-top:12px;letter-spacing:0.1em;direction:rtl">الهلع</p>
+  <p class="hero-hook">
+    <span class="fr">Si tu pouvais effacer une émotion, laquelle ?</span>
+    <span class="en">If you could erase one emotion, which one?</span>
+    <span class="ar">لو استطعت أن تمحو شعوراً، فأيّها تختار</span>
+  </p>
+  <div class="scroll-cue"></div>
+</header>
+
+<!-- SYNOPSIS -->
+<section class="synopsis" id="synopsis">
+  <div class="sec-label">
+    <span class="fr inline">Synopsis</span><span class="en inline">Synopsis</span>
+  </div>
+  <p class="lead fr">Tunisie, 2059. Une biopuce régule la mémoire et supprime les émotions. L'hypnose est interdite.</p>
+  <p class="lead en">Tunisia, 2059. A biochip regulates memory and suppresses emotion. Hypnotherapy is forbidden.</p>
+
+  <p class="body fr">
+    <strong>Taha est un « forgeron de pathos ».</strong> Par la poésie, il façonne pour les autres les émotions qu'ils ne peuvent plus ressentir. En secret, il consulte un hypnothérapeute. Sous hypnose, une forêt le conduit jusqu'à une maison sans électricité, veillée par un voisin silencieux. Ce qu'il y découvre le ramène à un passé qu'il n'aurait jamais dû atteindre — et à une vérité sur sa propre naissance.
+  </p>
+  <p class="body en">
+    <strong>Taha is a "pathos-smith".</strong> Through poetry, he forges for others the emotions they can no longer feel. In secret, he consults a hypnotherapist. Under hypnosis, a forest leads him to a house without electricity, watched by a silent neighbour. What he finds there draws him back to a past he was never meant to reach — and to a truth about his own birth.
+  </p>
+</section>
+
+<!-- NOTE D'INTENTION -->
+<section class="synopsis" id="statement">
+  <div class="sec-label">
+    <span class="fr inline">Note d'intention</span><span class="en inline">Director's statement</span>
+  </div>
+  <p class="lead fr" style="font-style:italic;color:var(--mist);font-size:clamp(18px,2.2vw,24px);max-width:34ch">« L'ancien monde se meurt, le nouveau tarde à apparaître, et dans ce clair-obscur surgissent les monstres. »</p>
+  <p class="lead en" style="font-style:italic;color:var(--mist);font-size:clamp(18px,2.2vw,24px);max-width:38ch">"The old world is dying, and the new world struggles to be born: now is the time of monsters."</p>
+  <p class="body fr" style="margin-top:20px">
+    J'ai situé le film en 2059, mais ce n'est pas un film sur le futur. Il reflète notre présent, où la mémoire devient interdite et où le sentiment est délégué aux machines. Taha, mon forgeron de pathos, façonne les émotions des autres par la poésie, tandis qu'un trouble de la parole le tient éloigné des siennes. Cette fracture est le vrai sujet du film : la distance entre ce qu'on peut exprimer et ce qu'on peut ressentir. La poésie est la dernière frontière de la résistance, le seul crime que la biopuce ne peut réguler.
+  </p>
+  <p class="body en" style="margin-top:20px">
+    I set the film in 2059, but it is not a film about the future. It mirrors our present, where memory becomes forbidden and feeling is delegated to machines. Taha, my pathos-smith, forges emotions for others through poetry while a speech impediment keeps him estranged from his own. That fracture is the film's true subject: the distance between what we can express and what we can feel. Poetry is the last frontier of resistance, the one crime the biochip cannot regulate.
+  </p>
+  <p class="body fr" style="margin-top:18px;color:var(--fog)">— Kamel Laaridhi</p>
+  <p class="body en" style="margin-top:18px;color:var(--fog)">— Kamel Laaridhi</p>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="sec-label">
+    <span class="fr inline">Images</span><span class="en inline">Stills</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="frame"><img src="images/film_foret.jpg" alt="Still — la forêt"></div>
+    <div class="frame"><img src="images/film_fenetre.jpg" alt="Still — la fenêtre"></div>
+    <div class="frame"><img src="images/film_bougie.jpg" alt="Still — la bougie"></div>
+    <div class="frame"><img src="images/film_femme.jpg" alt="Still — l'aveu"></div>
+  </div>
+  <p class="gallery-note fr">Images du film.</p>
+  <p class="gallery-note en">Film stills.</p>
+</section>
+
+<!-- FILM DETAILS -->
+<section id="details">
+  <div class="sec-label">
+    <span class="fr inline">Le film</span><span class="en inline">The film</span>
+  </div>
+  <div class="details-grid">
+    <div class="detail"><div class="k fr">Réalisation</div><div class="k en">Directed by</div><div class="v">Kamel Laaridhi</div></div>
+    <div class="detail"><div class="k fr">Genre</div><div class="k en">Genre</div><div class="v fr">Science-fiction</div><div class="v en">Science fiction</div></div>
+    <div class="detail"><div class="k fr">Pays</div><div class="k en">Country</div><div class="v fr">Tunisie</div><div class="v en">Tunisia</div></div>
+    <div class="detail"><div class="k fr">Langue</div><div class="k en">Language</div><div class="v fr">Arabe</div><div class="v en">Arabic</div></div>
+    <div class="detail"><div class="k fr">Production</div><div class="k en">Production</div><div class="v">Inside Production</div></div>
+  </div>
+</section>
+
+<!-- VENICE (hidden until announce) -->
+<section id="venice">
+  <p class="venice-badge fr">Sélection officielle — Semaine Internationale de la Critique, Venise 2026</p>
+  <p class="venice-badge en">Official Selection — International Critics' Week, Venice 2026</p>
+</section>
+
+<!-- CREDITS -->
+<section class="credits" id="credits">
+  <div class="sec-label" style="justify-content:center">
+    <span class="fr inline">Générique</span><span class="en inline">Credits</span>
+  </div>
+
+  <div class="block cast">
+    <div class="role fr">Avec</div><div class="role en">Starring</div>
+    <div class="names">Mohamed Grayaa · Nesrine Bani · Riadh Hamdi<br>Yosra Ben Ali · Kamel Dridi</div>
+  </div>
+
+  <div class="block">
+    <div class="role fr">Un film de</div><div class="role en">A film by</div>
+    <div class="names">Kamel Laaridhi</div>
+  </div>
+
+  <div class="block">
+    <div class="role fr">Produit par</div><div class="role en">Produced by</div>
+    <div class="names">Moncef Taleb</div>
+  </div>
+
+  <div class="block">
+    <div class="role fr">Coproduit par</div><div class="role en">Co-produced by</div>
+    <div class="names">Chawki Knis · Yazid Chebi · Mohamed Achref Lemmouchi · Sahbi Kreim</div>
+  </div>
+
+  <div class="block">
+    <div class="role fr">Image · Montage · Musique</div><div class="role en">Cinematography · Editing · Music</div>
+    <div class="names">Amine Messadi · Seifallah Ben Othman · Zouheir Gouja</div>
+  </div>
+
+  <div class="block">
+    <div class="role fr">Direction artistique · Maquillage & FX</div><div class="role en">Production design · Make-up & FX</div>
+    <div class="names">Lassaad Ben Sghaier · Nadia Rakia Ayed</div>
+  </div>
+
+  <div class="prod-logo">Inside Production</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="social">
+    <a href="https://www.facebook.com/profile.php?id=61590996820850" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/the_hallowman1" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@thehallowman1" target="_blank">TikTok</a>
+    <a href="https://x.com/THEHALLOW_MAN" target="_blank">X</a>
+  </div>
+  <a href="mailto:contact@inside-prod.com" class="contact-mail">contact@inside-prod.com</a>
+  <div class="footer-meta">
+    Inside Production SARL · 16 Avenue de Paris, 1000 Tunis, Tunisie<br>
+    <span class="fr">© 2026 Inside Production · Tous droits réservés</span>
+    <span class="en">© 2026 Inside Production · All rights reserved</span>
+  </div>
+  <p class="footer-phrase">The H@llow Man</p>
+</footer>
+
+<script>
+function setLang(l){
+  document.body.classList.remove('lang-fr','lang-en');
+  document.body.classList.add('lang-'+l);
+  document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+// Pour activer le bandeau Venise le jour J : ajouter la classe "venice-live" au body
+// document.body.classList.add('venice-live');
+</script>
+
+</body>
+</html>
